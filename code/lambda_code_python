@@ -1,0 +1,48 @@
+###
+
+import json
+import boto3
+
+# SNS Client
+sns = boto3.client('sns')
+
+# SNS Topic ARN
+TOPIC_ARN = 'arn:aws:sns:ap-southeast-1:<ACCOUNT_A_ID>:<SNS_TOPIC_NAME>'
+
+def lambda_handler(event, context):
+
+    print("Lambda Triggered")
+
+    # Extract S3 Details
+    bucket_name = event['Records'][0]['s3']['bucket']['name']
+    file_name = event['Records'][0]['s3']['object']['key']
+
+    print(f"Bucket Name: {bucket_name}")
+    print(f"File Name: {file_name}")
+
+    # SNS Message
+    message = f"""
+New file uploaded successfully
+
+Bucket Name : {bucket_name}
+File Name   : {file_name}
+
+Region      : ap-southeast-1
+Status      : Upload Successful
+"""
+
+    # Publish SNS Notification
+    sns.publish(
+        TopicArn=TOPIC_ARN,
+        Subject='S3 File Upload Alert',
+        Message=message
+    )
+
+    print("SNS Notification Sent")
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps('File processed successfully')
+    }
+
+

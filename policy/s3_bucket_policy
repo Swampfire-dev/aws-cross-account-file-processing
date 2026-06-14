@@ -1,0 +1,32 @@
+S3 Bucket Policy(Account B)
+
+
+
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowListBucket",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<A_USER_ACCOUNT_ID>:user/AWS_USER"
+            },
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::<S3_BUCKET>"
+        },
+        {
+            "Sid": "AllowObjectAccess",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<B_USER_ACCOUNT_ID>:user/AWS-USER"
+            },
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject"
+            ],
+            "Resource": "arn:aws:s3:::<bucket_name>/*"
+        }
+    ]
+}
+

@@ -1,0 +1,46 @@
+#sns-policy
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublishToSNS",
+            "Effect": "Allow",
+            "Action": "sns:Publish",
+            "Resource": "arn:aws:sns:ap-southeast-1:<account_id>:<SNS_TOPIC>"
+        }
+    ]
+}
+
+
+
+#s3-policy
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ReadInboundBucket",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::<bucket_name>/*"
+            ]
+        },
+        {
+            "Sid": "WriteProcessedBucket",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::<bucket_name>/*"
+            ]
+        }
+    ]
+}
+
+
+

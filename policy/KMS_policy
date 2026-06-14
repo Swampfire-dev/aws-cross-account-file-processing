@@ -1,0 +1,31 @@
+#####
+
+{
+
+
+	"Version": "2012-10-17",
+	"Id": "key-consolepolicy-3",
+	"Statement": [
+		{
+			"Sid": "Enable IAM User Permissions",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::<ACCOUNT A ID>:root"
+			},
+			"Action": "kms:*",
+			"Resource": "*"
+		},
+		{
+			"Sid": "AllowEncrypt",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::<ACCOUNT B>:user/AWS_USER"
+			},
+			"Action": [
+				"kms:Encrypt",
+				"kms:GenerateDataKey"
+			],
+			"Resource": "*"
+		}
+	]
+}
