@@ -1,4 +1,4 @@
-# AWS Cross-Account Secure File Processing Pipeline
+<img width="1125" height="762" alt="image" src="https://github.com/user-attachments/assets/4acaad88-f260-4d59-a010-e3e6b6ba243b" /># AWS Cross-Account Secure File Processing Pipeline
 
 ## Project Overview
 
@@ -6,19 +6,8 @@ This project demonstrates a secure event-driven file processing solution using A
 
 ## Architecture
 
-Account A (IAM User)
-↓
-Cross-Account Upload
-↓
-Amazon S3 (SSE-KMS Encrypted)
-↓
-S3 Event Notification
-↓
-AWS Lambda (Python)
-↙          ↘
-CloudWatch      Amazon SNS
-Logs             ↓
-Email Alert
+<img width="1130" height="756" alt="image" src="https://github.com/user-attachments/assets/2052c1c4-01c3-44d0-adb7-085271746a19" />
+
 
 ## AWS Services Used
 
@@ -39,14 +28,76 @@ Email Alert
 * IAM and resource-based access control
 
 ## Workflow
+Step 1: User Uploads File from Account A
+* An IAM user  from Account A uploads a file to the S3 bucket hosted in Account B. Cross-account access is enabled through S3 Bucket Policy and KMS Key Policy.
 
-1. User uploads a file from Account A.
-2. File is stored in a KMS-encrypted S3 bucket in Account B.
-3. S3 Event Notification triggers Lambda.
-4. Lambda extracts bucket and file information.
-5. Lambda writes logs to CloudWatch.
-6. Lambda publishes a notification to SNS.
-7. SNS sends an email alert.
+
+Step 2: File Stored in KMS-Encrypted S3 Bucket
+* The uploaded object is stored in the S3 bucket <bucket_name> using Server-Side Encryption with AWS KMS (SSE-KMS). The KMS key ensures data is encrypted at rest.
+
+S3 Bucket
+↓
+SSE-KMS Encryption
+↓
+Encrypted Object Stored
+
+
+Step 3: S3 Event Notification Detects Upload
+* S3 continuously monitors object events. When a new object is created, the configured Event Notification (ObjectCreated) is triggered.
+
+ObjectCreated Event
+↓
+S3 Event Notification
+
+
+Step 4: Lambda Function is Invoked
+The S3 event payload is automatically sent to the Lambda function. No manual execution is required.
+
+Lambda receives metadata such as:
+Bucket Name
+Object Name
+Event Time
+Event Type
+
+
+Step 5: Lambda Processes Event Data
+The Lambda function extracts required information from the event payload using Python.
+
+Operations performed:
+Read S3 event JSON
+Extract bucket name
+Extract object name
+Generate custom notification message
+
+
+Step 6: Lambda Writes Logs to CloudWatch
+The Lambda function records execution details in Amazon CloudWatch Logs for monitoring and troubleshooting.
+
+Logged Information:
+Lambda execution status
+Bucket name
+Uploaded file name
+Error messages (if any)
+
+
+Step 7: Lambda Publishes Notification to SNS
+Using the SNS Publish API, Lambda sends a message to the SNS Topic.
+
+The notification contains:
+Bucket Name
+File Name
+Upload Status
+Timestamp
+
+Lambda
+ ↓
+sns.publish()
+ ↓
+SNS Topic
+
+
+Step 8: SNS Sends Email Alert
+Amazon SNS forwards the notification to all confirmed subscribers.
 
 
 ### Skills Demonstrated
@@ -61,10 +112,5 @@ Email Alert
 * Cross-Account Access Management
 * AWS Troubleshooting
 
-## Future Improvements
 
-* Process files and move them to a processed bucket
-* Infrastructure provisioning using Terraform
-* CloudWatch Alarms and Monitoring
-* Dead Letter Queue (DLQ) implementation
 
