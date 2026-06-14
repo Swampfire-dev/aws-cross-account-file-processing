@@ -1,4 +1,4 @@
-<img width="1125" height="762" alt="image" src="https://github.com/user-attachments/assets/4acaad88-f260-4d59-a010-e3e6b6ba243b" /># AWS Cross-Account Secure File Processing Pipeline
+# AWS Cross-Account Secure File Processing Pipeline
 
 ## Project Overview
 
@@ -7,6 +7,8 @@ This project demonstrates a secure event-driven file processing solution using A
 ## Architecture
 
 <img width="1130" height="756" alt="image" src="https://github.com/user-attachments/assets/2052c1c4-01c3-44d0-adb7-085271746a19" />
+
+
 
 
 ## AWS Services Used
