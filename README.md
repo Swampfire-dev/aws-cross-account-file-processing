@@ -53,7 +53,7 @@ S3 Event Notification
 
 
 Step 4: Lambda Function is Invoked
-The S3 event payload is automatically sent to the Lambda function. No manual execution is required.
+* The S3 event payload is automatically sent to the Lambda function. No manual execution is required.
 
 Lambda receives metadata such as:
 Bucket Name
@@ -63,7 +63,7 @@ Event Type
 
 
 Step 5: Lambda Processes Event Data
-The Lambda function extracts required information from the event payload using Python.
+* The Lambda function extracts required information from the event payload using Python.
 
 Operations performed:
 Read S3 event JSON
@@ -73,7 +73,7 @@ Generate custom notification message
 
 
 Step 6: Lambda Writes Logs to CloudWatch
-The Lambda function records execution details in Amazon CloudWatch Logs for monitoring and troubleshooting.
+* The Lambda function records execution details in Amazon CloudWatch Logs for monitoring and troubleshooting.
 
 Logged Information:
 Lambda execution status
@@ -83,7 +83,7 @@ Error messages (if any)
 
 
 Step 7: Lambda Publishes Notification to SNS
-Using the SNS Publish API, Lambda sends a message to the SNS Topic.
+* Using the SNS Publish API, Lambda sends a message to the SNS Topic.
 
 The notification contains:
 Bucket Name
@@ -99,7 +99,7 @@ SNS Topic
 
 
 Step 8: SNS Sends Email Alert
-Amazon SNS forwards the notification to all confirmed subscribers.
+* Amazon SNS forwards the notification to all confirmed subscribers.
 
 
 ### Skills Demonstrated
