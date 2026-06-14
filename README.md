@@ -37,19 +37,9 @@ Step 1: User Uploads File from Account A
 Step 2: File Stored in KMS-Encrypted S3 Bucket
 * The uploaded object is stored in the S3 bucket <bucket_name> using Server-Side Encryption with AWS KMS (SSE-KMS). The KMS key ensures data is encrypted at rest.
 
-S3 Bucket
-↓
-SSE-KMS Encryption
-↓
-Encrypted Object Stored
-
 
 Step 3: S3 Event Notification Detects Upload
 * S3 continuously monitors object events. When a new object is created, the configured Event Notification (ObjectCreated) is triggered.
-
-ObjectCreated Event
-↓
-S3 Event Notification
 
 
 Step 4: Lambda Function is Invoked
@@ -65,37 +55,16 @@ Event Type
 Step 5: Lambda Processes Event Data
 * The Lambda function extracts required information from the event payload using Python.
 
-Operations performed:
-Read S3 event JSON
-Extract bucket name
-Extract object name
-Generate custom notification message
-
 
 Step 6: Lambda Writes Logs to CloudWatch
 * The Lambda function records execution details in Amazon CloudWatch Logs for monitoring and troubleshooting.
 
-Logged Information:
-Lambda execution status
-Bucket name
-Uploaded file name
-Error messages (if any)
-
 
 Step 7: Lambda Publishes Notification to SNS
 * Using the SNS Publish API, Lambda sends a message to the SNS Topic.
-
+  
 The notification contains:
-Bucket Name
-File Name
-Upload Status
-Timestamp
-
-Lambda
- ↓
-sns.publish()
- ↓
-SNS Topic
+Bucket Name - File Name - Upload Status - Timestamp
 
 
 Step 8: SNS Sends Email Alert
